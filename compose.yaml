@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+  #Это конфигурация Docker Compose для запуска подсистемы отправки уведомлений.
+  alertmanager:
+    container_name: alertmanager
+    deploy:
+      restart_policy:
+        condition: always
+        delay: 5s
+    env_file: alertmanager.env
+    image: prom/alertmanager:latest
+    volumes:
+      - "./alertmanager:/etc/alertmanager"
+    expose:
+      - 9093
+
+networks:
+  default:
+    external: true
+    name: $NETWORK
